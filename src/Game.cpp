@@ -35,3 +35,9 @@ void Game::Update(float deltaT)
 	pos_vec.y = ball.getPosition().y + (speedy * deltaT);
 	ball.setPosition(pos_vec);
 }
+
+void Game::NewScale(float x, float y)
+{
+	ball.setScale(Vector2f(x, y));
+	ball.setRadius(radius * sqrt(pow(1 / x, 2) + pow(1 / y, 2)));
+}

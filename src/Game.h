@@ -8,6 +8,7 @@ public:
 	void Init(RenderWindow& window);
 	void Update(float deltaT);
 	void Draw(RenderWindow& window);
+	void NewScale(float x_, float y_);
 
 private:
 	CircleShape ball;
