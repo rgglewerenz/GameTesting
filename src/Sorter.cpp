@@ -6,6 +6,7 @@ void Sorter::initItems(int amt_items, int speed, float maxW, float maxH)
 
 	//allocates the right amt of memory to the arr
 	arr = (int*)malloc(amt_items * sizeof(int));
+	arr_sorted = (int*)malloc(amt_items * sizeof(int));
 
 	maxW_ = maxW;
 	maxH_ = maxH;
@@ -17,7 +18,7 @@ void Sorter::initItems(int amt_items, int speed, float maxW, float maxH)
 	{
 		//Adds the new y value to the arr obj
 		arr[i] = i;
-
+		arr_sorted[i] = i;
 		//Sets the size of the rectangles
 		RectangleShape temp;
 		Vector2f vec_size;
@@ -32,7 +33,7 @@ void Sorter::initItems(int amt_items, int speed, float maxW, float maxH)
 		//Sets the RectangleShape to the Items added
 		temp.setPosition(vec_pos);
 		temp.setSize(vec_size);
-		temp.setFillColor(Color::Blue);
+		temp.setFillColor(Color::White);
 
 		items.push_back(temp);
 	}
@@ -53,12 +54,17 @@ void Sorter::DrawItems(RenderWindow& window)
 
 	size_vec.x = items[0].getSize().x;
 	onIndex.setSize(size_vec);
-	onIndex.setFillColor(Color::Green);
+	onIndex.setFillColor(Color::Red);
 
 	unsigned int index_ = 0;
 	for (RectangleShape a : items)
 	{
 		//cout << a.getSize().y << endl;
+		if (arr_sorted[index_] == arr[index_])
+		{
+			a.setFillColor(Color::Green);
+		}
+
 		window.draw(a);
 		if (index == index_)
 		{

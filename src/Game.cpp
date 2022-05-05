@@ -13,7 +13,7 @@ void Game::Init(RenderWindow& window)
 	pos_vec.y = window.getSize().y / 2;
 	ball.setPosition(pos_vec);
 	ball.setRadius(radius);
-	ball.setFillColor(Color::Red);
+	ball.setFillColor(Color::Magenta);
 
 	maxX = window.getSize().x;
 	maxY = window.getSize().y;

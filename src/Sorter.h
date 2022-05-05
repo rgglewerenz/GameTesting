@@ -16,6 +16,7 @@ public:
 	~Sorter()
 	{
 		free(arr);
+		free(arr_sorted);
 		items.clear();
 	}
 
@@ -23,6 +24,7 @@ private:
 	void Randomize();
 	void Swap(int index1, int index2);
 	int* arr;
+	int* arr_sorted;
 	unsigned int index = 0;
 	bool sorted = false;
 	bool over = false;
