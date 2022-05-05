@@ -17,6 +17,8 @@ int main()
 	sClock timer;
 	Game test;
 	test.Init(window);
+	Sorter sort;
+	sort.initItems(500, 1, window.getSize().x, window.getSize().y);
 	sf::Event event;
 	bool focused = true;
 	while (window.isOpen())
@@ -30,9 +32,13 @@ int main()
 			else if (event.type == sf::Event::LostFocus)
 				focused = false;
 		}
+		float temp = timer.DeltaT();
 		window.clear();
 		if (focused)
-			test.Update(timer.DeltaT());
+			test.Update(temp);
+		if (focused)
+			sort.UpdateSort();
+		sort.DrawItems(window);
 		test.Draw(window);
 		window.display();
 	}

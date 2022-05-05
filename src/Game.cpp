@@ -3,6 +3,7 @@ void Game::Draw(RenderWindow& window)
 {
 	window.draw(ball);
 }
+
 void Game::Init(RenderWindow& window)
 {
 	ball = CircleShape(4);
@@ -21,6 +22,7 @@ void Game::Init(RenderWindow& window)
 void Game::Update(float deltaT)
 {
 	Vector2f pos_vec;
+
 	if (ball.getPosition().x + (speedx * deltaT) + (radius * 2) >= maxX || ball.getPosition().x + (speedx * deltaT) <= 0)
 	{
 		speedx *= -1;

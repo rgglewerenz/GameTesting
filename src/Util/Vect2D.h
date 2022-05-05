@@ -36,7 +36,7 @@ private:
 		//TODO
 	}
 };
-};
+}
 class Vect2D : Vector2f
 {
 public:
