@@ -19,3 +19,11 @@ void Vect2D::SetTR(int Degrees, float _r)
 	r = _r;
 	calcCart();
 }
+
+void Vect2D::calcCart()
+{
+}
+
+void Vect2D::calcPolar()
+{
+}

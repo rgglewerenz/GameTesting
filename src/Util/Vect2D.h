@@ -44,6 +44,7 @@ public:
 	{
 		x = _x;
 		y = _y;
+		calcPolar();
 	}
 
 	void SetXY(float _x, float _y);
