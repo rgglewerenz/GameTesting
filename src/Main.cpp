@@ -10,7 +10,7 @@ int main()
 
 	sf::RenderWindow window;
 	sf::ContextSettings settings;
-	settings.antialiasingLevel = 4;
+	settings.antialiasingLevel = 2;
 
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
@@ -20,18 +20,13 @@ int main()
 	sClock timer;
 	Game test;
 	test.Init(window);
+
 	Sorter sort;
 	sort.initItems(500, 1, window.getSize().x, window.getSize().y);
 	sf::Event event;
-	sf::Font font;
-	if (!font.loadFromFile("content/Fonts/ComicSans.ttf"))
-	{
-		cout << "Please check to make sure the loc is accurate, and the file isn't corrupted" << endl;
-		window.close();
-	}
-	sf::Text testText("Hello", font, 50);
-	testText.setPosition(Vector2f(100, 100));
-	testText.setFillColor(Color::Blue);
+
+	Printer printer("Hello", "content/Fonts/RetroFont.ttf", 10, 40, 40, Color::Green);
+
 	bool focused = true;
 	float temp;
 	float oldX = window.getSize().x;
@@ -50,6 +45,7 @@ int main()
 			{
 				cout << "Resized" << endl;
 				test.NewScale(1 / (window.getSize().x / oldX), 1 / (window.getSize().y / oldY));
+				printer.setScale(1 / (window.getSize().x / oldX), 1 / (window.getSize().y / oldY));
 				cout << window.getSize().x / oldX << endl;
 				cout << window.getSize().y / oldY << endl;
 			}
@@ -61,10 +57,9 @@ int main()
 			test.Update(temp);
 		if (focused)
 			sort.UpdateSort();
-
 		sort.DrawItems(window);
 		test.Draw(window);
-		window.draw(testText);
+		printer.Print(window);
 		window.display();
 	}
 

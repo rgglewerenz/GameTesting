@@ -22,22 +22,36 @@ void Game::Init(RenderWindow& window)
 void Game::Update(float deltaT)
 {
 	Vector2f pos_vec;
-
-	if (ball.getPosition().x + (speedx * deltaT) + (radius * 2) >= maxX || ball.getPosition().x + (speedx * deltaT) <= 0)
-	{
-		speedx *= -1;
-	}
-	if (ball.getPosition().y + (speedy * deltaT) + (radius * 2) >= maxY || ball.getPosition().y + (speedy * deltaT) <= 0)
-	{
-		speedy *= -1;
-	}
 	pos_vec.x = ball.getPosition().x + (speedx * deltaT);
 	pos_vec.y = ball.getPosition().y + (speedy * deltaT);
+
+	if (ball.getPosition().x + (radius * 2) > maxX)
+	{
+		speedx *= -1;
+		pos_vec.x = (maxX - (radius * 2)) + (speedx * deltaT);
+	}
+	else if (ball.getPosition().x < 0)
+	{
+		speedx *= -1;
+		pos_vec.x = (speedx * deltaT);
+	}
+
+	if (ball.getPosition().y + (radius * 2) > maxY)
+	{
+		speedy *= -1;
+		pos_vec.y = (maxY - (radius * 2)) + (speedy * deltaT);
+	}
+	else if (ball.getPosition().y < 0)
+	{
+
+		speedy *= -1;
+		pos_vec.y = (speedy * deltaT);
+	}
 	ball.setPosition(pos_vec);
 }
 
 void Game::NewScale(float x, float y)
 {
 	ball.setScale(Vector2f(x, y));
-	ball.setRadius(radius * sqrt(pow(1 / x, 2) + pow(1 / y, 2)));
+	ball.setRadius(radius * (1 / sqrt(pow(x, 2) + pow(y, 2))));
 }

@@ -2,6 +2,7 @@
 #include "Platform/Platform.hpp"
 #include "Util\sClock.h"
 using namespace sf;
+using namespace std;
 class Game
 {
 public:
@@ -14,6 +15,6 @@ private:
 	CircleShape ball;
 	int maxX, maxY;
 	float radius = 10;
-	float speedx = 80;
-	float speedy = 100;
+	float speedx = 120;
+	float speedy = 20;
 };
