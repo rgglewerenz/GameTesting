@@ -23,6 +23,15 @@ int main()
 	Sorter sort;
 	sort.initItems(500, 1, window.getSize().x, window.getSize().y);
 	sf::Event event;
+	sf::Font font;
+	if (!font.loadFromFile("content/Fonts/ComicSans.ttf"))
+	{
+		cout << "Please check to make sure the loc is accurate, and the file isn't corrupted" << endl;
+		window.close();
+	}
+	sf::Text testText("Hello", font, 50);
+	testText.setPosition(Vector2f(100, 100));
+	testText.setFillColor(Color::Blue);
 	bool focused = true;
 	float temp;
 	float oldX = window.getSize().x;
@@ -52,8 +61,10 @@ int main()
 			test.Update(temp);
 		if (focused)
 			sort.UpdateSort();
+
 		sort.DrawItems(window);
 		test.Draw(window);
+		window.draw(testText);
 		window.display();
 	}
 
