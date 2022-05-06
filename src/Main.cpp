@@ -15,7 +15,7 @@ int main()
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
 	// Use the screenScalingFactor
-	window.create(sf::VideoMode(500.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!", sf::Style::Default, settings);
+	window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!", sf::Style::Default, settings);
 
 	sClock timer;
 	Game test;
@@ -43,21 +43,18 @@ int main()
 				focused = false;
 			else if (event.type == sf::Event::Resized)
 			{
-				cout << "Resized" << endl;
+				window.setSize(Vector2u(400, 800));
 				test.NewScale(1 / (window.getSize().x / oldX), 1 / (window.getSize().y / oldY));
 				printer.setScale(1 / (window.getSize().x / oldX), 1 / (window.getSize().y / oldY));
-				cout << window.getSize().x / oldX << endl;
-				cout << window.getSize().y / oldY << endl;
 			}
 			timer.DeltaT();
 		}
 		temp = timer.DeltaT();
+		if (temp > 10 && focused)
+		{
+			;
+		}
 		window.clear();
-		if (window.hasFocus())
-			test.Update(temp);
-		if (focused)
-			sort.UpdateSort();
-		sort.DrawItems(window);
 		test.Draw(window);
 		printer.Print(window);
 		window.display();
