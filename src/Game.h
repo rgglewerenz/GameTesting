@@ -15,6 +15,6 @@ private:
 	CircleShape ball;
 	int maxX, maxY;
 	float radius = 10;
-	float speedx = 120;
-	float speedy = 20;
+	float speedx = 20;
+	float speedy = 0;
 };

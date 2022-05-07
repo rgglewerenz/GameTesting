@@ -9,6 +9,7 @@ int main()
 #endif
 
 	sf::RenderWindow window;
+	View myView;
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 2;
 
@@ -22,15 +23,13 @@ int main()
 	test.Init(window);
 
 	Sorter sort;
-	sort.initItems(500, 1, window.getSize().x, window.getSize().y);
+	sort.initItems(100, 1, window.getSize().x, window.getSize().y);
 	sf::Event event;
 
-	Printer printer("Hello", "content/Fonts/RetroFont.ttf", 10, 40, 40, Color::Green);
+	Printer printer("Hello", "content/Fonts/RetroFont.ttf", 50, 80, 80, Color::Green);
 
 	bool focused = true;
 	float temp;
-	float oldX = window.getSize().x;
-	float oldY = window.getSize().y;
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
@@ -43,9 +42,12 @@ int main()
 				focused = false;
 			else if (event.type == sf::Event::Resized)
 			{
-				window.setSize(Vector2u(400, 800));
-				test.NewScale(1 / (window.getSize().x / oldX), 1 / (window.getSize().y / oldY));
-				printer.setScale(1 / (window.getSize().x / oldX), 1 / (window.getSize().y / oldY));
+				window.setSize(Vector2u(800, 800));
+
+				myView.setCenter(window.getSize().x / 2, window.getSize().y / 2);
+				myView.setSize(window.getSize().x, window.getSize().y);
+				test.NewScale(window.getSize().x, window.getSize().y);
+				window.setView(myView);
 			}
 			timer.DeltaT();
 		}
@@ -54,8 +56,10 @@ int main()
 		{
 			;
 		}
+
 		window.clear();
 		test.Draw(window);
+		test.Update(temp);
 		printer.Print(window);
 		window.display();
 	}
