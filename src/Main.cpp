@@ -11,12 +11,12 @@ int main()
 	sf::RenderWindow window;
 	View myView;
 	sf::ContextSettings settings;
-	settings.antialiasingLevel = 2;
-
+	settings.antialiasingLevel = 1;
+	;
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
 	// Use the screenScalingFactor
-	window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!", sf::Style::Default, settings);
+	window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!", sf::Style::Fullscreen, settings);
 
 	sClock timer;
 	Game test;
@@ -29,6 +29,7 @@ int main()
 	Printer printer("Hello", "content/Fonts/RetroFont.ttf", 50, 80, 80, Color::Green);
 
 	bool focused = true;
+	bool fullscreen = true;
 	float temp;
 	while (window.isOpen())
 	{
@@ -42,12 +43,28 @@ int main()
 				focused = false;
 			else if (event.type == sf::Event::Resized)
 			{
-				window.setSize(Vector2u(800, 800));
-
 				myView.setCenter(window.getSize().x / 2, window.getSize().y / 2);
 				myView.setSize(window.getSize().x, window.getSize().y);
 				test.NewScale(window.getSize().x, window.getSize().y);
 				window.setView(myView);
+			}
+			else if (Keyboard::isKeyPressed(Keyboard::Escape) && fullscreen)
+			{
+				window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!", sf::Style::Default | sf::Style::Resize, settings);
+				myView.setCenter(window.getSize().x / 2, window.getSize().y / 2);
+				myView.setSize(window.getSize().x, window.getSize().y);
+				test.NewScale(window.getSize().x, window.getSize().y);
+				window.setView(myView);
+				fullscreen = !fullscreen;
+			}
+			else if (Keyboard::isKeyPressed(Keyboard::Escape) && !fullscreen)
+			{
+				window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!", sf::Style::Fullscreen, settings);
+				myView.setCenter(window.getSize().x / 2, window.getSize().y / 2);
+				myView.setSize(window.getSize().x, window.getSize().y);
+				test.NewScale(window.getSize().x, window.getSize().y);
+				window.setView(myView);
+				fullscreen = !fullscreen;
 			}
 			timer.DeltaT();
 		}
@@ -61,6 +78,7 @@ int main()
 		test.Draw(window);
 		test.Update(temp);
 		printer.Print(window);
+		printer.setText("Hello " + to_string(1 / temp));
 		window.display();
 	}
 

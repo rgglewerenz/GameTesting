@@ -12,7 +12,8 @@ void Game::Init(RenderWindow& window)
 	pos_vec.x = window.getSize().x / 2;
 	pos_vec.y = window.getSize().y / 2;
 	ball.setPosition(pos_vec);
-	ball.setRadius(radius);
+	float z = sqrt(pow(window.getSize().x, 2) + pow(window.getSize().y, 2));
+	ball.setRadius(radius * z);
 	ball.setFillColor(Color::Magenta);
 
 	maxX = window.getSize().x;
@@ -22,12 +23,12 @@ void Game::Init(RenderWindow& window)
 void Game::Update(float deltaT)
 {
 	Vector2f pos_vec;
-	pos_vec.x = ball.getPosition().x + (speedx * deltaT);
-	pos_vec.y = ball.getPosition().y + (speedy * deltaT) * ball.getScale().y;
+	pos_vec.x = ball.getPosition().x + (speedx * deltaT) * ball.getRadius();
+	pos_vec.y = ball.getPosition().y + (speedy * deltaT) * ball.getRadius();
 	if (((pos_vec.x + (ball.getRadius() * 2))) > maxX)
 	{
 		speedx *= -1;
-		pos_vec.x = (maxX - (radius * 2)) + (speedx * deltaT);
+		pos_vec.x = (maxX - (ball.getRadius() * 2)) + (speedx * deltaT);
 	}
 	else if (pos_vec.x < 0)
 	{
@@ -38,7 +39,7 @@ void Game::Update(float deltaT)
 	if (pos_vec.y + (ball.getRadius() * 2) > maxY)
 	{
 		speedy *= -1;
-		pos_vec.y = (maxY - (radius * 2)) + (speedy * deltaT);
+		pos_vec.y = (maxY - (ball.getRadius() * 2)) + (speedy * deltaT);
 	}
 	else if (pos_vec.y < 0)
 	{
@@ -51,10 +52,9 @@ void Game::Update(float deltaT)
 
 void Game::NewScale(float x, float y)
 {
-	float scaleX = maxX / x;
-	float scaleY = maxY / y;
+
 	maxX = x;
 	maxY = y;
-	ball.setRadius(sqrt(pow(scaleX, 2) + pow(scaleY, 2)));
-	//ball.setPosition(Vector2f(maxX - (radius * 2), maxY - (radius * 2)));
+	float z = sqrt(pow(x, 2) + pow(y, 2));
+	ball.setRadius(radius * z);
 }
